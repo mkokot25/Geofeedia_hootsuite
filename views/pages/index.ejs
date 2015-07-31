@@ -4,6 +4,7 @@
       <title>Geofeedia</title>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 			<script type="text/javascript" src="/spin.js"></script>
+			 <script type="text/javascript" src="/bootstrap.js"></script>
       <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 	    <link href="/post.css" rel="stylesheet" type="text/css">
 	     <link href="/bootstrap.css" rel="stylesheet" type="text/css">
@@ -24,29 +25,30 @@
          
          
          	var opts = {
-  lines: 13 // The number of lines to draw
-, length: 28 // The length of each line
-, width: 14 // The line thickness
-, radius: 42 // The radius of the inner circle
-, scale: 1 // Scales overall size of the spinner
-, corners: 1 // Corner roundness (0..1)
-, color: '#000' // #rgb or #rrggbb or array of colors
-, opacity: 0.25 // Opacity of the lines
-, rotate: 0 // The rotation offset
-, direction: 1 // 1: clockwise, -1: counterclockwise
-, speed: 1 // Rounds per second
-, trail: 60 // Afterglow percentage
-, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-, zIndex: 2e9 // The z-index (defaults to 2000000000)
-, className: 'spinner' // The CSS class to assign to the spinner
-, top: '50%' // Top position relative to parent
-, left: '50%' // Left position relative to parent
-, shadow: false // Whether to render a shadow
-, hwaccel: false // Whether to use hardware acceleration
-, position: 'absolute' // Element positioning
-}
-var target = document.getElementById('searchInputs')
-var spinner = new Spinner(opts).spin(target);
+  			lines: 13 // The number of lines to draw
+			, length: 28 // The length of each line
+			, width: 14 // The line thickness
+			, radius: 42 // The radius of the inner circle
+			, scale: 1 // Scales overall size of the spinner
+			, corners: 1 // Corner roundness (0..1)
+			, color: '#000' // #rgb or #rrggbb or array of colors
+			, opacity: 0.25 // Opacity of the lines
+			, rotate: 0 // The rotation offset
+			, direction: 1 // 1: clockwise, -1: counterclockwise
+			, speed: 1 // Rounds per second
+			, trail: 60 // Afterglow percentage
+			, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+			, zIndex: 2e9 // The z-index (defaults to 2000000000)
+			, className: 'spinner' // The CSS class to assign to the spinner
+			, top: '50%' // Top position relative to parent
+			, left: '50%' // Left position relative to parent
+			, shadow: false // Whether to render a shadow
+			, hwaccel: false // Whether to use hardware acceleration
+			, position: 'absolute' // Element positioning
+			}
+		
+			var target = document.getElementById('searchInputs')
+			var spinner = new Spinner(opts).spin(target);
 
 
             map.getCredentials(MakeGeocodeRequest);
@@ -136,9 +138,13 @@ var spinner = new Spinner(opts).spin(target);
     		logo3 = "<div class='content'><div class='box3'><img class='logo' src='" + logo + "'/><div class='userstamp'><a href='"+name_link+"'>"+ name + "</a><br/>"+ date +"</div></div></div>";
     		
     		$("#container"+i).append(main_image1).append(logo3).after(button);
+    		
+    		$(".spinner").remove();
+    		
     		}
             }else{
-            alert("The has been an error");
+            $(".spinner").remove();
+            $('#modal').modal('show')
             
             }
             
@@ -218,6 +224,23 @@ hsp.init({apiKey:"e2weulwolrsw0ocwc404k4o8k3icmckml5k"});
 <script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js">
 </script> 
    
+   
+  <div class="modal fade" id="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title panel-danger">An Error Occurred</h4>
+      </div>
+      <div class="modal-body">
+        <p>Please check your search address.&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
    </body>
