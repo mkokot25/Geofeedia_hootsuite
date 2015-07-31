@@ -1,56 +1,183 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<head>
-  <% include ../partials/header.ejs %>
-</head>
+   <head>
+      <title>We Rock</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-<body>
+      <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+	    <link href="post.css" rel="stylesheet" type="text/css">
+	     <link href="bootstrap.css" rel="stylesheet" type="text/css">
+      <script>
+         
+         var map = null;
+         
+         
+ 
+         function GetMap()
+         {
+            // Initialize the map
+            map = new Microsoft.Maps.Map(document.getElementById("mapDiv"),{credentials:"Ansr7k7sdmmW_DFB1q-vDmNbwNcqaHcW3cFr9eQLaWI1A85k27rtCJQaIBJo9JPx", mapTypeId:Microsoft.Maps.MapTypeId.road}); 
 
-  <% include ../partials/nav.ejs %>
+         }
 
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="/lang-logo.png">
-    </a>
-    <h1>Getting Started with Node on Heroku</h1>
-    <p>This is a sample Node application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Getting Started with Node</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
-  </div>
-</div>
-<div class="container">
-  <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs" class="alert-link">Getting Started with Node on Heroku</a> tutorial.
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku, either using Git or by using <a href="https://github.com/heroku/node-js-getting-started">Heroku Button</a> on the repository.</li>
+         function ClickGeocode(credentials)
+         {
+            map.getCredentials(MakeGeocodeRequest);
+         }
 
-        <li>When Heroku received the source code, it grabbed all the dependencies in the <a href="https://github.com/heroku/node-js-getting-started/blob/master/package.json">package.json</a>.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-        <li>Check out the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started</a> guide to learn more!</li>
-      </ul>
+         function MakeGeocodeRequest(credentials)
+         {
+
+            var geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations?query=" + encodeURI(document.getElementById('txtQuery').value) + "&output=json&jsonp=GeocodeCallback&key=" + credentials;
+			alert(geocodeRequest);
+            CallRestService(geocodeRequest);
+         }
+
+         function GeocodeCallback(result) 
+         {
+            //alert("Found location: " + result.resourceSets[0].resources[0].name);
+			var lat = result.resourceSets[0].resources[0].point.coordinates[0]
+			var lon = result.resourceSets[0].resources[0].point.coordinates[1]
+			
+			
+			
+            if (result &&
+                   result.resourceSets &&
+                   result.resourceSets.length > 0 &&
+                   result.resourceSets[0].resources &&
+                   result.resourceSets[0].resources.length > 0) 
+            {
+               // Set the map view using the returned bounding box
+               var bbox = result.resourceSets[0].resources[0].bbox;
+               var viewBoundaries = Microsoft.Maps.LocationRect.fromLocations(new Microsoft.Maps.Location(bbox[0], bbox[1]), new Microsoft.Maps.Location(bbox[2], bbox[3]));
+               map.setView({ bounds: viewBoundaries});
+
+				// Add a pushpin at the found location
+               var location = new Microsoft.Maps.Location(result.resourceSets[0].resources[0].point.coordinates[0], result.resourceSets[0].resources[0].point.coordinates[1]);
+               var pushpin = new Microsoft.Maps.Pushpin(location);
+               map.entities.push(pushpin);
+
+   
+            
+            var url = "https://api.geofeedia.com/v1/search/latlon/"+lat+","+lon+",5.0?appId=3c7f0f3c&appKey=d71ba6aa64fd467bb69f7d39125012e1";
+    
+    		var response = httpGet(url);
+    		obj = JSON.parse(response);
+    		alert(response);
+    		$("#geo").remove();
+    		 
+   		 	$("#geofeedia").append("<table id='geo'></table>");
+    		
+    		//refresh(document.getElementById('txtQuery').value, url);
+    		
+    		for (i = 0; i < obj.items.length; i++) 
+    		{ 
+    		
+    	
+    		var source = obj.items[i].source;
+    		var date = obj.items[i].publishDate;
+    		var title = obj.items[i].title;
+    		var description = obj.items[i].description;
+    		var name = obj.items[i].author.name;
+    		var name_link = obj.items[i].author.url;
+    		var post_link = obj.items[i].url;
+    		var media_type = obj.items[i].mediaItems[0].type;
+    		var image = obj.items[i].mediaItems[0].media[0].thumbnail.url;
+    		var lat = obj.items[i].latitude;
+    		var lon = obj.items[i].longitude;
+    		
+    		
+    		var logo = "";
+    		if(source == "instagram"){
+    		logo = "http://www.iconarchive.com/download/i80462/uiconstock/socialmedia/Instagram.ico";
+    		}else if(source == "facebook"){
+    		logo = "http://inwallspeakers1.com/wp-content/uploads/2015/06/facebook-logo-png-transparent-background.png";
+    		}else if(source == "twitter"){
+    		logo = "http://www.adweek.com/socialtimes/files/2014/07/alltwitter-twitter-bird-logo-white-on-blue.png";
+    		}else if(source == "flickr"){
+    		logo = "http://www.timothypflaniganmd.com/wp-content/uploads/2014/12/flickr-logo-transparent.png";
+    		}
+    		
+    		
+    	
+
+    		$("#geo").append("<div class='container' id='container"+ i +"' style='width:400px;'></div>");
+    		button = "<a href='"+ post_link +"' data-role='button' id='button"+i+"' class='toProfile'><button type='button' class='btn btn-primary' style='width:400px;'>Comment</button></a>";
+    		
+    		main_image1 = "<div class='box'><div class='firstcell'><img class='main_image' src='"+image+"' alt=''/></div><div class='content'><div class='box2'><p>" + title + "</p></div></div></div>";
+    		logo3 = "<div class='content'><div class='box3'><img class='logo' src='" + logo + "'/><div class='userstamp'><a href='"+name_link+"'>"+ name + "</a><br/>"+ date +"</div></div></div>";
+    		
+    		$("#container"+i).append(main_image1).append(logo3).after(button);
+    		}
+            }
+            
+         }
+        
+         
+         
+         function refresh(text, url)
+         {
+         
+         setTimeout(function(){ 
+         if(text==document.getElementById('txtQuery').value){
+         
+    	 var response = httpGet(url);
+    	 obj = JSON.parse(response);
+         
+            var source = obj.items[i].source;
+    		var date = obj.items[i].publishDate;
+    		var title = obj.items[i].title;
+    		var description = obj.items[i].description;
+    		var name = obj.items[i].author.name;
+    		var name_link = obj.items[i].author.url;
+    		var post_link = obj.items[i].url;
+    		var media_type = obj.items[i].mediaItems[0].type;
+    		var image = obj.items[i].mediaItems[0].media[0].thumbnail.url;
+    		var lat = obj.items[i].latitude;
+    		var lon = obj.items[i].longitude;
+    		alert(date);
+         
+        //alert($("#geo").children("tr:first").text());
+         
+         
+         }
+         }, 5000);
+         }
+
+         function CallRestService(request) 
+         {
+            var script = document.createElement("script");
+            script.setAttribute("type", "text/javascript");
+            script.setAttribute("src", request);
+            document.body.appendChild(script);
+         }
+
+		function httpGet(theUrl)
+		{
+   		 var xmlHttp = new XMLHttpRequest();
+    	xmlHttp.open( "GET", theUrl, false );
+    	xmlHttp.send( null );
+    
+    	return xmlHttp.responseText;
+		}
+
+
+      </script>
+   </head>
+   
+   <body onload="GetMap();">
+	<script src="jquery-2.1.4.js"></script>
+	<div id="entire">
+      <div id='mapDiv' style="position:relative; width:400px; height:400px;"></div>
+      <input id="txtQuery" type="text" value="Portland" style="margin-bottom:10px;"/>
+      <input type="button" value="Geocode" onclick="ClickGeocode()"/>    
+      
+      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <div id="geofeedia"><div id='geo'></div></div>
     </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started with Node on Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/deploying-nodejs">Deploying Node Apps on Heroku</a></li>
-      </ul>
-    </div>
-  </div> <!-- row -->
-   <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-  </div>
-</div>
+    
+   
 
-
-</body>
+         
+   </body>
 </html>
