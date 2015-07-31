@@ -83,7 +83,7 @@
 
 				// Add a pushpin at the found location
                var location = new Microsoft.Maps.Location(result.resourceSets[0].resources[0].point.coordinates[0], result.resourceSets[0].resources[0].point.coordinates[1]);
-               var pushpin = new Microsoft.Maps.Pushpin(location, {icon: 'http://picresize.com/images/rsz_2light-blue-circle.png', width: 50, height: 50, draggable: true}); 
+               var pushpin = new Microsoft.Maps.Pushpin(location, {icon: 'http://picresize.com/images/rsz_light-blue-circle.png', width: 50, height: 50, draggable: true}); 
 
                map.entities.push(pushpin);
 
@@ -139,14 +139,13 @@
     		
     		$("#container"+i).append(main_image1).append(logo3).after(button);
     		
-    		$(".spinner").remove();
     		
     		}
             }else{
-            $(".spinner").remove();
             $('#modal').modal('show')
             
             }
+             $(".spinner").remove();
             
          }
         
