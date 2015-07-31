@@ -23,7 +23,7 @@
          function ClickGeocode(credentials)
          {
          
-         	$(".spinner").remove();
+         	
          	var opts = {
   			lines: 13 // The number of lines to draw
 			, length: 28 // The length of each line
@@ -49,8 +49,8 @@
 		
 			var target = document.getElementById('searchInputs')
 			var spinner = new Spinner(opts).spin(target);
-
-
+			$(".spinner").remove();
+			
             map.getCredentials(MakeGeocodeRequest);
          }
 
@@ -64,7 +64,7 @@
 
          function GeocodeCallback(result) 
          {
-            //alert("Found location: " + result.resourceSets[0].resources[0].name);
+            alert("Found location: " + result);
 			var lat = result.resourceSets[0].resources[0].point.coordinates[0]
 			var lon = result.resourceSets[0].resources[0].point.coordinates[1]
 			
@@ -104,8 +104,7 @@
     		$('#modal').modal('show');
     		
     		}
-    		spinner.stop()
-    		$(".spinner").remove();
+    		
     		for (i = 0; i < obj.items.length; i++) 
     		{ 
     		
