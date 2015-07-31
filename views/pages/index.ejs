@@ -93,6 +93,7 @@
     		var response = httpGet(url);
     		obj = JSON.parse(response);
     		alert(response);
+    		$(".spinner").remove();
     		$("#geo").remove();
     		 
    		 	$("#geofeedia").append("<table id='geo'></table>");
@@ -145,16 +146,11 @@
     		$("#container"+i).append(main_image1).append(logo3).after(button);
 			
     		}
-    		$(".spinner").remove();
     		
             }else{
-            
-            $(".spinner").remove();
             $('#modal').modal('show');
             
             }
-          
-            $(".spinner").remove();
          }
         
          
