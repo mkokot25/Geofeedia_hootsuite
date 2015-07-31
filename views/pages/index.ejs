@@ -68,7 +68,7 @@
 			var lat = result.resourceSets[0].resources[0].point.coordinates[0]
 			var lon = result.resourceSets[0].resources[0].point.coordinates[1]
 			
-			
+			alert(lat);
 			
             if (result &&
                    result.resourceSets &&
@@ -148,7 +148,9 @@
 			
     		}
     		$(".spinner").remove();
+    		
             }else{
+            
             $(".spinner").remove();
             $('#modal').modal('show');
             
@@ -216,7 +218,7 @@
       <div id='mapDiv' style="position:relative; width:100%; height:400px;"></div>
       <div class="searchInputs" id="searchInputs">
       		<input id="txtQuery" type="text" value="Portland" />
-      		<input type="button"  type='button' class='btn btn-primary toProfile' value="Geocode" onclick="ClickGeocode()"/>    
+      		<input type="button"  type='button' class='btn btn-primary' value="Geocode" onclick="ClickGeocode()" style="margin-bottom:10px;"/>    
       </div>
 
       
