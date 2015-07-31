@@ -2,7 +2,7 @@
 
 .container{
     height: 400px;
-    width: 350px;
+    width: 300px;
     border-style: solid;
     border-radius: 5px;
     border-width: 1px;
@@ -60,10 +60,7 @@
 }
 
 #entire{
-padding-left: 30px;
-padding-right: 30px;
 background-color: #E9E9E9;
-
 }
 
 body{

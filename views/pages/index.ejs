@@ -165,19 +165,25 @@
       </script>
    </head>
    
-   <body onload="GetMap();">
+   <body id='entire' onload="GetMap();">
 	<script src="/jquery-2.1.4.js"></script>
-	<div id="entire">
-      <div id='mapDiv' style="position:relative; width:400px; height:400px;"></div>
+
+      <div id='mapDiv' style="position:relative; width:300px; height:400px;"></div>
       <input id="txtQuery" type="text" value="Portland" style="margin-bottom:10px;"/>
       <input type="button" value="Geocode" onclick="ClickGeocode()"/>    
       
       <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <div id="geofeedia"><div id='geo'></div></div>
-    </div>
     
+	<script>
+hsp.init({apiKey:"e2weulwolrsw0ocwc404k4o8k3icmckml5k"});
+</script>
+	
+	
+<script src="https://d2l6uygi1pgnys.cloudfront.net/jsapi/2-0/hsp.js">
+</script> 
    
 
-         
+
    </body>
 </html>
