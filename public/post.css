@@ -56,7 +56,7 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	float: right;
-	margin-right: 165px;
+	margin-right: 140px;
 }
 
 #entire{
@@ -69,6 +69,7 @@ background-color: #E9E9E9;
 
 .toProfile{
 
+width: 100%;
 color:white;
 margin-bottom:10px;'
 
