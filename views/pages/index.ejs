@@ -64,7 +64,6 @@
 
          function GeocodeCallback(result) 
          {
-            alert("Found location: " + result);
 			var lat = result.resourceSets[0].resources[0].point.coordinates[0]
 			var lon = result.resourceSets[0].resources[0].point.coordinates[1]
 			
@@ -73,7 +72,9 @@
                    result.resourceSets &&
                    result.resourceSets.length > 0 &&
                    result.resourceSets[0].resources &&
-                   result.resourceSets[0].resources.length > 0) 
+                   result.resourceSets[0].resources.length > 0 &&
+                   lat.length > 0 &&
+                   lon.length > 0) 
             {
                // Set the map view using the returned bounding box
                var bbox = result.resourceSets[0].resources[0].bbox;

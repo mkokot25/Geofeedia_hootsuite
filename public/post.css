@@ -2,7 +2,7 @@
 
 .container{
     height: 400px;
-    width: 95%;
+    width: 90%;
     border-style: solid;
     border-radius: 5px;
     border-width: 1px;
@@ -24,7 +24,7 @@
 
 
 .box2{ 
-	height: 100px;
+	height: 75px;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	overflow: scroll;
