@@ -108,6 +108,9 @@
     		
     		$("#container"+i).append(main_image1).append(logo3).after(button);
     		}
+            }else{
+            alert("The has been an error");
+            
             }
             
          }
@@ -169,9 +172,11 @@
 
 <div class = "mapArea" style='position:relative'>
       <div id='mapDiv' style="position:relative; width:100%; height:400px;"></div>
-      <input id="txtQuery" type="text" value="Portland" style="margin-bottom:10px;" style="position:absolute;left:30px;"/>
-      <input type="button" value="Geocode" onclick="ClickGeocode()" style="position:absolute;left:30px;"/>    
+      <div class="searchButtons" style="position:absolute;left:30px;">
+      		<input id="txtQuery" type="text" value="Portland" style="margin-bottom:10px;"/>
+      		<input type="button" value="Geocode" onclick="ClickGeocode()"/>    
       </div>
+</div>
       
       <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <div id="geofeedia"><div id='geo'></div></div>
