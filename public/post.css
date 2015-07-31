@@ -9,6 +9,14 @@
     background-color: white;
 }
 
+.searchInputs{
+
+display: block;
+margin-left: auto;
+margin-right: auto 
+
+}
+
 .firstcell{
     height: 215px;
     padding-top: 10px;
