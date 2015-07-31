@@ -23,7 +23,7 @@
          function ClickGeocode(credentials)
          {
          
-         	
+         	$(".spinner").remove();
          	var opts = {
   			lines: 13 // The number of lines to draw
 			, length: 28 // The length of each line
@@ -49,7 +49,7 @@
 		
 			var target = document.getElementById('searchInputs')
 			var spinner = new Spinner(opts).spin(target);
-			$(".spinner").remove();
+			
 			
             map.getCredentials(MakeGeocodeRequest);
          }
@@ -102,7 +102,7 @@
     		if(obj.items.length == 0){
     		
     		$('#modal').modal('show');
-    		
+    		$(".spinner").remove();
     		}
     		
     		for (i = 0; i < obj.items.length; i++) 
@@ -143,7 +143,6 @@
     		logo3 = "<div class='content'><div class='box3'><img class='logo' src='" + logo + "'/><div class='userstamp'><a href='"+name_link+"'>"+ name + "</a><br/>"+ date +"</div></div></div>";
     		
     		$("#container"+i).append(main_image1).append(logo3).after(button);
-			
 			
     		}
     		$(".spinner").remove();
