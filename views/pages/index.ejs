@@ -74,6 +74,7 @@
 
          function GeocodeCallback(result) 
          {
+         	console.log(result);
 			var lat = result.resourceSets[0].resources[0].point.coordinates[0]
 			var lon = result.resourceSets[0].resources[0].point.coordinates[1]
 			lastKnown = [lat,lon];
