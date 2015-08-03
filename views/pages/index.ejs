@@ -97,7 +97,7 @@
 
 				// Add a pushpin at the found location
                var location = new Microsoft.Maps.Location(result.resourceSets[0].resources[0].point.coordinates[0], result.resourceSets[0].resources[0].point.coordinates[1]);
-               var pushpin = new Microsoft.Maps.Pushpin(location, {icon: 'http://i.imgur.com/ALMEPWD.png', width: 50, height: 50, draggable: false}); 
+               var pushpin = new Microsoft.Maps.Pushpin(location, {icon: 'http://i.imgur.com/ALMEPWD.png', width: circleParam, height: circleParam, draggable: false}); 
 				
                map.entities.push(pushpin);
 
@@ -164,7 +164,6 @@
     		var lat = obj.items[i].latitude;
     		var lon = obj.items[i].longitude;
     		
-    		
     		var logo = "";
     		if(source == "instagram"){
     		logo = "http://www.iconarchive.com/download/i80462/uiconstock/socialmedia/Instagram.ico";
@@ -176,8 +175,6 @@
     		logo = "http://www.timothypflaniganmd.com/wp-content/uploads/2014/12/flickr-logo-transparent.png";
     		}
     		
-    		
-    	
 
     		$("#geo").append("<div class='container' id='container"+ i +"'></div>");
     		button = "<a href='"+post_link+"' target='_blank'><button type='button' class='btn btn-primary toProfile' style='margin-bottom:10px;'>Comment</button></a>";
@@ -204,7 +201,7 @@
     	if (unit=="K") { dist = dist * 1.609344 }
    		if (unit=="N") { dist = dist * 0.8684 }
     	return dist
-}
+		}
 
 
 
