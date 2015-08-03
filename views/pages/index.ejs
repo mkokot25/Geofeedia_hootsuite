@@ -25,7 +25,7 @@
          		if(lastKnown.length > 0){
          		refresh(lastKnown);
          		};
-         		} , 5000);
+         		} , 10000);
 
          }
 
@@ -91,10 +91,13 @@
                var viewBoundaries = Microsoft.Maps.LocationRect.fromLocations(new Microsoft.Maps.Location(bbox[0], bbox[1]), new Microsoft.Maps.Location(bbox[2], bbox[3]));
                map.setView({ bounds: viewBoundaries});
 
+				console.log(bbox[0]);
+				console.log(bbox[1]);
+
 				// Add a pushpin at the found location
                var location = new Microsoft.Maps.Location(result.resourceSets[0].resources[0].point.coordinates[0], result.resourceSets[0].resources[0].point.coordinates[1]);
                var pushpin = new Microsoft.Maps.Pushpin(location, {icon: 'http://www.chessvariants.org/graphics.dir/alfaerie2/circlebluesmall.gif', width: 50, height: 50, draggable: true}); 
-
+				
                map.entities.push(pushpin);
 
    			refresh([lat,lon]);
@@ -180,12 +183,29 @@
     		button = "<a href='"+post_link+"' target='_blank'><button type='button' class='btn btn-primary toProfile' style='margin-bottom:10px;'>Comment</button></a>";
     		
     		main_image1 = "<div class='box'><div class='firstcell'><img class='main_image' src='"+image+"' alt=''/></div><div class='content'><div class='box2'><p>" + title + "</p></div></div></div>";
-    		logo3 = "<div class='content'><div class='box3'><img class='logo' src='" + logo + "'/><div class='userstamp'><a href='"+name_link+"'>"+ name + "</a><br/>"+ date +"</div></div></div>";
+    		logo3 = "<div class='content'><div class='box3'><img class='logo' src='" + logo + "'/><div class='userstamp'><a href='"+name_link+"' target='_blank'>"+ name + "</a><br/>"+ date +"</div></div></div>";
     		
     		$("#container"+i).append(main_image1).append(logo3).after(button);
 			
     		}
 		}
+		
+		function distance(lat1, lon1, lat2, lon2, unit) {
+    	var radlat1 = Math.PI * lat1/180
+    	var radlat2 = Math.PI * lat2/180
+    	var radlon1 = Math.PI * lon1/180
+    	var radlon2 = Math.PI * lon2/180
+    	var theta = lon1-lon2
+    	var radtheta = Math.PI * theta/180
+    	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    	dist = Math.acos(dist)
+    	dist = dist * 180/Math.PI
+    	dist = dist * 60 * 1.1515
+    	if (unit=="K") { dist = dist * 1.609344 }
+   		if (unit=="N") { dist = dist * 0.8684 }
+    	return dist
+}
+
 
 
       </script>
