@@ -92,12 +92,13 @@
                map.setView({ bounds: viewBoundaries});
 
 				length = distance(bbox[0],bbox[1],bbox[2],bbox[3],"N");
+				alert(length);
 				var circleParam = (400/length)*5;
 				alert(circleParam);
 
 				// Add a pushpin at the found location
                var location = new Microsoft.Maps.Location(result.resourceSets[0].resources[0].point.coordinates[0], result.resourceSets[0].resources[0].point.coordinates[1]);
-               var pushpin = new Microsoft.Maps.Pushpin(location, {icon: 'http://sectools.org/flags/mouse-30x30.png', width: 50, height: 50, draggable: false}); 
+               var pushpin = new Microsoft.Maps.Pushpin(location, {icon: '/searchCircle2', width: 50, height: 50, draggable: false}); 
 				
                map.entities.push(pushpin);
 
