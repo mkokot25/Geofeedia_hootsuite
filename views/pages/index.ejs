@@ -91,13 +91,13 @@
                var viewBoundaries = Microsoft.Maps.LocationRect.fromLocations(new Microsoft.Maps.Location(bbox[0], bbox[1]), new Microsoft.Maps.Location(bbox[2], bbox[3]));
                map.setView({ bounds: viewBoundaries});
 
-				length = distance(bbox[0],bbox[1],bbox[2],bbox[3]);
+				length = distance(bbox[0],bbox[1],bbox[2],bbox[3],"N");
 				var circleParam = (400/length)*5;
 				alert(circleParam);
 
 				// Add a pushpin at the found location
                var location = new Microsoft.Maps.Location(result.resourceSets[0].resources[0].point.coordinates[0], result.resourceSets[0].resources[0].point.coordinates[1]);
-               var pushpin = new Microsoft.Maps.Pushpin(location, {icon: '/searchcircle.png', width: 50, height: 50, draggable: false}); 
+               var pushpin = new Microsoft.Maps.Pushpin(location, {icon: 'http://i.imgur.com/bPlrE4k.png', width: 50, height: 50, draggable: false}); 
 				
                map.entities.push(pushpin);
 
