@@ -11,7 +11,20 @@
       <script>
          
          var map = null;
+         var lastKnown = []
          
+         window.setInterval(function(){
+         
+        while(true){
+         if(lastKnown.length > 0){
+         
+         refresh(lastKnown);
+         
+         };
+         };
+         };
+         , 5000);
+        
  
          function GetMap()
          {
@@ -52,6 +65,7 @@
 			
 			
             map.getCredentials(MakeGeocodeRequest);
+            
          }
 
          function MakeGeocodeRequest(credentials)
@@ -66,7 +80,7 @@
          {
 			var lat = result.resourceSets[0].resources[0].point.coordinates[0]
 			var lon = result.resourceSets[0].resources[0].point.coordinates[1]
-			
+			lastKnown = [lat,lon];
 			
             if (result &&
                    result.resourceSets &&
@@ -87,9 +101,39 @@
 
                map.entities.push(pushpin);
 
-   			
-            
-            var url = "https://api.geofeedia.com/v1/search/latlon/"+lat+","+lon+",5.0?appId=3c7f0f3c&appKey=d71ba6aa64fd467bb69f7d39125012e1";
+   			refresh([lat,lon]);
+    		
+            }else{
+            $('#modal').modal('show');
+            $(".spinner").remove();
+            }
+         }
+        
+
+         function CallRestService(request) 
+         {
+            var script = document.createElement("script");
+            script.setAttribute("type", "text/javascript");
+            script.setAttribute("src", request);
+            document.body.appendChild(script);
+         }
+
+		function httpGet(theUrl)
+		{
+   		 var xmlHttp = new XMLHttpRequest();
+    	xmlHttp.open( "GET", theUrl, false );
+    	xmlHttp.send( null );
+    
+    	return xmlHttp.responseText;
+		}
+		
+		function refresh(lastKnown)
+		{
+		
+		lat = lastKnown[0];
+		lon = lastKnown[1];
+		
+		 var url = "https://api.geofeedia.com/v1/search/latlon/"+lat+","+lon+",5.0?appId=3c7f0f3c&appKey=d71ba6aa64fd467bb69f7d39125012e1";
     
     		var response = httpGet(url);
     		obj = JSON.parse(response);
@@ -99,12 +143,10 @@
     		 
    		 	$("#geofeedia").append("<table id='geo'></table>");
     		
-    		//refresh(document.getElementById('txtQuery').value, url);
-    		
     		if(obj.items.length == 0){
     		
     		$('#modal').modal('show');
-    		$(".spinner").remove();
+
     		}
     		
     		for (i = 0; i < obj.items.length; i++) 
@@ -147,59 +189,6 @@
     		$("#container"+i).append(main_image1).append(logo3).after(button);
 			
     		}
-    		
-            }else{
-            $('#modal').modal('show');
-            $(".spinner").remove();
-            }
-         }
-        
-         
-         
-         function refresh(text, url)
-         {
-         
-         setTimeout(function(){ 
-         if(text==document.getElementById('txtQuery').value){
-         
-    	 var response = httpGet(url);
-    	 obj = JSON.parse(response);
-         
-            var source = obj.items[i].source;
-    		var date = obj.items[i].publishDate;
-    		var title = obj.items[i].title;
-    		var description = obj.items[i].description;
-    		var name = obj.items[i].author.name;
-    		var name_link = obj.items[i].author.url;
-    		var post_link = obj.items[i].url;
-    		var media_type = obj.items[i].mediaItems[0].type;
-    		var image = obj.items[i].mediaItems[0].media[0].thumbnail.url;
-    		var lat = obj.items[i].latitude;
-    		var lon = obj.items[i].longitude;
-    		alert(date);
-         
-        //alert($("#geo").children("tr:first").text());
-         
-         
-         }
-         }, 5000);
-         }
-
-         function CallRestService(request) 
-         {
-            var script = document.createElement("script");
-            script.setAttribute("type", "text/javascript");
-            script.setAttribute("src", request);
-            document.body.appendChild(script);
-         }
-
-		function httpGet(theUrl)
-		{
-   		 var xmlHttp = new XMLHttpRequest();
-    	xmlHttp.open( "GET", theUrl, false );
-    	xmlHttp.send( null );
-    
-    	return xmlHttp.responseText;
 		}
 
 
